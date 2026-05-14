@@ -12,17 +12,19 @@ main{
 }
 
 form{
+    margin: 100px auto;
     width: 550px;
     padding: 24px;
     color: white;
-    background-color: dodgerblue;
+    background-color: rgb(91, 169, 248);
     font-family: sans-serif;
     border: 1px solid black;
 }
 
-.main-tittle{
+.main-title{
     text-transform: uppercase;
     text-align: center;
+    justify-content: center;
     font-weight: bold;
     font-size: 32px;
 }
@@ -93,5 +95,5 @@ button[type="submit"]{
     height: 48px;
     border: none;
     border-radius: 3px;
-    background-color: #4defd7;
+    background-color: #5cc5c9;
 }
