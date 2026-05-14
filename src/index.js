@@ -120,7 +120,7 @@ const tree = {
 
 function createElement(node) {
   const element = document.createElement(node.tag);
-  element.textContent = node.text || "";
+  element.textContent = node.text ?? "";
 
   if (node.attrs) {
     for (const [key, value] of Object.entries(node.attrs)) {
