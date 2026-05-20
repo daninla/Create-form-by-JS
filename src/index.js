@@ -1,206 +1,132 @@
 "use strict";
 
-const tree = {
-  tag: "main",
-  children: [
-    {
-      tag: "form",
-      attrs: { id: "app" },
-      children: [
-        {
-          tag: "h1",
-          attrs: { class: "main-title" },
-          text: "CREATE AN ACCOUNT",
-        },
-
-        {
-          tag: "p",
-          attrs: { class: "sub-title" },
-          text: "We always keep your name and email address private.",
-        },
-
-        // first row
-        {
-          tag: "div",
-          attrs: { class: "inputs-container" },
-          children: [
-            {
-              tag: "input",
-              attrs: {
-                type: "text",
-                placeholder: "First name",
-              },
-            },
-            {
-              tag: "input",
-              attrs: {
-                type: "text",
-                placeholder: "Last name",
-              },
-            },
-          ],
-        },
-
-        // second row
-        {
-          tag: "div",
-          attrs: { class: "inputs-container" },
-          children: [
-            {
-              tag: "input",
-              attrs: {
-                type: "text",
-                placeholder: "Display Name",
-              },
-            },
-            {
-              tag: "input",
-              attrs: {
-                type: "email",
-                placeholder: "Email Address",
-              },
-            },
-          ],
-        },
-
-        // third row
-        {
-          tag: "div",
-          attrs: { class: "inputs-container" },
-          children: [
-            {
-              tag: "input",
-              attrs: {
-                type: "password",
-                placeholder: "Password",
-              },
-            },
-            {
-              tag: "input",
-              attrs: {
-                type: "password",
-                placeholder: "Password Confirmation",
-              },
-            },
-          ],
-        },
-
-        {
-          tag: "div",
-          attrs: { class: "radio-container" },
-          children: [
-            {
-              tag: "div",
-              attrs: { class: "radio-item" },
-              children: [
-                {
-                  tag: "input",
-                  attrs: {
-                    type: "radio",
-                    name: "account",
-                    value: "buyer",
-                    id: "buyer",
-                  },
-                },
-                {
-                  tag: "label",
-                  attrs: { for: "buyer" },
-                  children: [
-                    {
-                      tag: "span",
-                      attrs: { class: "radio-title"},
-                      text: "Join As a Buyer",
-                    },
-                    {
-                      tag: "span",
-                      attrs: { class: "radio-description" },
-                      text: "I am looking for a Name, Logo or Tagline for my business, brand or product.",
-                    },
-                  ],
-                },
-              ],
-            },
-
-            {
-              tag: "div",
-              attrs: { class: "radio-item" },
-              children: [
-                {
-                  tag: "input",
-                  attrs: {
-                    type: "radio",
-                    name: "account",
-                    value: "seller",
-                    id: "seller",
-                  },
-                },
-                {
-                  tag: "label",
-                  attrs: { for: "seller" },
-                  children: [
-                    {
-                      tag: "span",
-                      attrs: { class: "radio-title", id: "seller" },
-                      text: "Join As a Creative or Marketplace Seller",
-                    },
-                    {
-                      tag: "span",
-                      attrs: { class: "radio-description", id: "seller" },
-                      text: "I plan to submit name ideas, Logo designs or sell names in Domain Marketplace.",
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-
-        {
-          tag: "div",
-          attrs: { class: "checkbox-container" },
-          children: [
-            {
-              tag: "input",
-              attrs: {
-                type: "checkbox",
-                id: "offers",
-              },
-            },
-            {
-              tag: "label",
-              attrs: { for: "offers" },
-              text: "Allow Squadhelp to send marketing/promotional offers from time to time",
-            },
-          ],
-        },
-
-        {
-          tag: "button",
-          attrs: { type: "submit" },
-          text: "Create account",
-        },
-      ],
-    },
-  ],
+const createElement = (tag, attrs = {}, text = "") => {
+  const el = document.createElement(tag);
+  for (const key in attrs) {
+    el.setAttribute(key, attrs[key]);
+  }
+  el.textContent = text ?? "";
+  return el;
 };
 
-function createElement(node) {
-  const element = document.createElement(node.tag);
-  element.textContent = node.text ?? "";
+//=================HEADERS================
+const mainTitle = createElement(
+  "h1",
+  { class: "main-title" },
+  "CREATE AN ACCOUNT",
+);
+const subTitle = createElement(
+  "p",
+  { class: "sub-title" },
+  "We always keep your name and email address private.",
+);
 
-  if (node.attrs) {
-    for (const [key, value] of Object.entries(node.attrs)) {
-      element.setAttribute(key, value);
-    }
+//=================Inputs================
+const createRow = (in1, in2) => {
+  const row = createElement("div", { class: "inputs-container" });
+  row.append(createElement("input", in1), createElement("input", in2));
+  return row;
+};
+
+const row1 = createRow(
+  { type: "text", placeholder: "First name", name: "firstName" },
+  { type: "text", placeholder: "Last name", name: "lastName" },
+);
+const row2 = createRow(
+  { type: "text", placeholder: "Display Name", name: "displayName" },
+  { type: "email", placeholder: "Email Address", name: "emailAddress" },
+);
+const row3 = createRow(
+  { type: "password", placeholder: "Password" },
+  { type: "password", placeholder: "Password Confirmation" },
+);
+
+// =================RadioButtons==================
+const createRadio = (title, desc, value) => {
+  const item = createElement("div", { class: "radio-item" });
+
+  const uniqueId = `account-${value}`;
+
+  const input = createElement("input", {
+    type: "radio",
+    name: "account",
+    value: value,
+    id: uniqueId,
+  });
+
+  const label = createElement("label", { for: uniqueId });
+  label.append(
+    createElement("span", { class: "radio-title" }, title),
+    createElement("span", { class: "radio-description" }, desc),
+  );
+
+  // Кладем их рядом, как того требует твой CSS
+  item.append(input, label);
+  return item;
+};
+
+const radioCont = createElement("div", { class: "radio-container" });
+radioCont.append(
+  createRadio(
+    "Join As a Buyer",
+    "I am looking for a Name, Logo or Tagline for my business, brand or product.",
+    "buyer",
+  ),
+  createRadio(
+    "Join As a Creative or Marketplace Seller",
+    "I plan to submit name ideas, Logo designs or sell names in Domain Marketplace.",
+    "seller",
+  ),
+);
+
+// ================Checkbox================
+const checkCont = createElement("div", { class: "checkbox-container" });
+checkCont.append(
+  createElement("input", { type: "checkbox", id: "terms" }),
+  createElement(
+    "label",
+    { for: "terms" },
+    "Allow Squadhelp to send marketing/promotional offers from time to time",
+  ),
+);
+
+const submitBtn = createElement("button", { type: "submit" }, "Create account");
+
+// ================== FINAL==================
+const form = createElement("form", { id: "app" });
+form.append(
+  mainTitle,
+  subTitle,
+  row1,
+  row2,
+  row3,
+  radioCont,
+  checkCont,
+  submitBtn,
+);
+
+const main = createElement("main");
+main.append(form);
+
+document.body.append(main);
+
+//==================================LocalStorage======================
+
+class Person {
+  constructor(data) {
+    Object.assign(this, data);
   }
-
-  if (node.children) {
-    node.children.forEach((child) => {
-      element.appendChild(createElement(child));
-    });
-  }
-
-  return element;
 }
 
-document.body.appendChild(createElement(tree));
+submitBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  const inputs = form.querySelectorAll("input[name]");
+  const obj = {};
+  inputs.forEach((el) => {
+    obj[el.name] = el.value.trim();
+  });
+  const person = new Person(obj);
+  const storageKey = person.lastName ?? "unknown";
+  localStorage.setItem(storageKey, JSON.stringify(person));
+
+});
