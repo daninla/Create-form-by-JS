@@ -122,11 +122,16 @@ submitBtn.addEventListener("click", (e) => {
   e.preventDefault();
   const inputs = form.querySelectorAll("input[name]");
   const obj = {};
-  inputs.forEach((el) => {
-    obj[el.name] = el.value.trim();
-  });
-  const person = new Person(obj);
-  const storageKey = person.lastName ?? "unknown";
-  localStorage.setItem(storageKey, JSON.stringify(person));
 
+  inputs.forEach((el) => {
+    if (el.name !== "account") obj[el.name] = el.value.trim();
+  });
+  const required = ["firstName", "lastName", "emailAddress"];
+  const isEmpty = required.some((value) => !obj[value]);
+  if (isEmpty) {
+    return;
+  }
+  const person = new Person(obj);
+  const storageKey = person.lastName;
+  localStorage.setItem(storageKey, JSON.stringify(person));
 });
