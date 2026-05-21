@@ -126,3 +126,32 @@ submitBtn.addEventListener("submit", (e) => {
   
   localStorage.setItem(storageKey, JSON.stringify(person));
 });
+//=========================================Email validation============================================
+
+const emailInput = document.querySelector('input[type="email"]');
+const invalidEmailBorder = document.createElement('div');
+invalidEmailBorder.classList.add('invalidEmailBorder');
+invalidEmailBorder.textContent = 'Некоректна форма запису електроної пошти';
+main.appendChild(invalidEmailBorder)
+
+const regExpEmail = /^[\w.-]+@[\w.-]+\.\w{2,13}$/i;
+
+function setValid() {
+  invalidEmailBorder.classList.remove('show');
+}
+
+function setInvalid() {
+  invalidEmailBorder.classList.add('show');
+}
+
+function checkEmail(event) {
+  const value = event.target.value;
+
+  if (value === '') {
+    setValid();
+    return;
+  }
+  regExpEmail.test(value) ? setValid() : setInvalid();
+}
+
+emailInput.addEventListener('input', checkEmail);

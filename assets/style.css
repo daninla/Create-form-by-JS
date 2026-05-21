@@ -1,138 +1,159 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body{
-    background-color: #e9e9e9;
-    font-family: sans-serif;
+body {
+  background-color: #e9e9e9;
+  font-family: sans-serif;
 }
 
-main{
-    display: flex;
-    justify-content: center;
-    padding: 35px 0;
+main {
+  display: flex;
+  justify-content: center;
+  padding: 35px 0;
 }
 
-form{
-    width: 600px;
-    padding: 24px;
-    background-color: #42AAFF;
-    color: white;
-    border: 1px solid #1d1d1d;
+form {
+  width: 600px;
+  padding: 24px;
+  background-color: #42aaff;
+  color: white;
+  border: 1px solid #1d1d1d;
 }
 
 /* title */
 
-.main-title{
-    text-align: center;
-    font-size: 38px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    margin-bottom: 14px;
+.main-title {
+  text-align: center;
+  font-size: 38px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 14px;
 }
 
-.sub-title{
-    width: 430px;
-    margin: 0 auto 34px;
-    text-align: center;
-    font-size: 15px;
-    line-height: 1.5;
-    font-weight: 600;
-    color: rgba(255,255,255,0.95);
+.sub-title {
+  width: 430px;
+  margin: 0 auto 34px;
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.5;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
 }
 
 /* inputs */
 
-.inputs-container{
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 18px;
+.inputs-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 18px;
 }
 
-.inputs-container input{
-    width: 48%;
-    height: 53px;
-    padding: 0 24px;
-    border: none;
-    border-radius: 3px;
-    background-color: #f5f5f5;
-    font-size: 16px;
-    color: #000000;
-    outline: none;
+.inputs-container input {
+  width: 48%;
+  height: 53px;
+  padding: 0 24px;
+  border: none;
+  border-radius: 3px;
+  background-color: #f5f5f5;
+  font-size: 16px;
+  color: #000000;
+  outline: none;
 }
 
 /* radio */
 
-.radio-container{
-    display: flex;
-    flex-direction: column;
-    gap: 22px;
-    margin: 30px 0 24px;
+.radio-container {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  margin: 30px 0 24px;
 }
 
-.radio-item{
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    border: 1px solid rgba(255,255,255,0.7);
-    padding: 12px 20px;
+.radio-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  padding: 12px 20px;
 }
 
-.radio-item input{
-    margin-top: 5px;
-    transform: scale(1.1);
+.radio-item input {
+  margin-top: 5px;
+  transform: scale(1.1);
 }
 
-.radio-item label{
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+.radio-item label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.radio-title{
-    font-size: 18px;
-    font-weight: 400;
-    color: white;
+.radio-title {
+  font-size: 18px;
+  font-weight: 400;
+  color: white;
 }
 
-.radio-description{
-    font-size: 13px;
-    line-height: 1.4;
-    color: rgba(255,255,255,0.8);
+.radio-description {
+  font-size: 13px;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 /* checkbox */
 
-.checkbox-container{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 28px;
-    padding-left: 18px;
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+  padding-left: 18px;
 }
 
-.checkbox-container input{
-    width: 14px;
-    height: 14px;
+.checkbox-container input {
+  width: 14px;
+  height: 14px;
 }
 
-.checkbox-container label{
-    font-size: 13px;
-    color: rgba(255,255,255,0.9);
+.checkbox-container label {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 /* button */
 
-button[type="submit"]{
-    width: 100%;
-    height: 64px;
-    border: none;
-    border-radius: 3px;
-    background-color: #35d0cf;
-    color: white;
-    font-size: 18px;
-    font-weight: 700;
-    cursor: pointer;
+button[type="submit"] {
+  width: 100%;
+  height: 64px;
+  border: none;
+  border-radius: 3px;
+  background-color: #35d0cf;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.invalidEmailBorder {
+  display: none;
+  width: 250px;
+  height: 60px;
+  border: 3px solid red;
+  background-color: #ffa0a0;
+  border-radius: 10px;
+  z-index: 9999;
+  margin-top: 150px;
+  position: absolute;
+  color: #ff0000;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+}
+
+.invalidEmailBorder.show {
+  display: flex;
 }
