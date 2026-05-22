@@ -113,25 +113,16 @@ document.body.append(main);
 //==================================LocalStorage======================
 
 class Person {
-  constructor(data) {
-    Object.assign(this, data);
+  constructor(...args) {
+    args.forEach(({ name, value }) => (this[name] = value));
   }
 }
 
-submitBtn.addEventListener("click", (e) => {
+submitBtn.addEventListener("submit", (e) => {
   e.preventDefault();
   const inputs = form.querySelectorAll("input[name]");
-  const obj = {};
-
-  inputs.forEach((el) => {
-    if (el.name !== "account") obj[el.name] = el.value.trim();
-  });
-  const required = ["firstName", "lastName", "emailAddress"];
-  const isEmpty = required.some((value) => !obj[value]);
-  if (isEmpty) {
-    return;
-  }
-  const person = new Person(obj);
+  const person = new Person(inputs);
   const storageKey = person.lastName;
+  
   localStorage.setItem(storageKey, JSON.stringify(person));
 });
