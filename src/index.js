@@ -132,7 +132,7 @@ const emailInput = document.querySelector('input[type="email"]');
 const invalidEmailBorder = document.createElement('div');
 invalidEmailBorder.classList.add('invalidEmailBorder');
 invalidEmailBorder.textContent = 'Некоректна форма запису електроної пошти';
-main.appendChild(invalidEmailBorder)
+row2.appendChild(invalidEmailBorder)
 
 const regExpEmail = /^[\w.-]+@[\w.-]+\.\w{2,13}$/i;
 
