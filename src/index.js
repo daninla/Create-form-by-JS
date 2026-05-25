@@ -29,16 +29,36 @@ const createRow = (in1, in2) => {
 };
 
 const row1 = createRow(
-  { type: "text", placeholder: "First name", name: "firstName" },
-  { type: "text", placeholder: "Last name", name: "lastName" },
+  {
+    type: "text",
+    placeholder: "First name",
+    name: "firstName",
+    required: true,
+  },
+  { type: "text", placeholder: "Last name", name: "lastName", required: true },
 );
 const row2 = createRow(
-  { type: "text", placeholder: "Display Name", name: "displayName" },
-  { type: "email", placeholder: "Email Address", name: "emailAddress" },
+  {
+    type: "text",
+    placeholder: "Display Name",
+    name: "displayName",
+    required: true,
+  },
+  {
+    type: "email",
+    placeholder: "Email Address",
+    name: "emailAddress",
+    required: true,
+  },
 );
 const row3 = createRow(
-  { type: "password", placeholder: "Password" },
-  { type: "password", placeholder: "Password Confirmation" },
+  { id: 0, type: "password", placeholder: "Password", required: true },
+  {
+    id: 1,
+    type: "password",
+    placeholder: "Password Confirmation",
+    required: true,
+  },
 );
 
 // =================RadioButtons==================
@@ -52,6 +72,7 @@ const createRadio = (title, desc, value) => {
     name: "account",
     value: value,
     id: uniqueId,
+    required: true,
   });
 
   const label = createElement("label", { for: uniqueId });
@@ -60,7 +81,6 @@ const createRadio = (title, desc, value) => {
     createElement("span", { class: "radio-description" }, desc),
   );
 
-  // Кладем их рядом, как того требует твой CSS
   item.append(input, label);
   return item;
 };
@@ -82,7 +102,7 @@ radioCont.append(
 // ================Checkbox================
 const checkCont = createElement("div", { class: "checkbox-container" });
 checkCont.append(
-  createElement("input", { type: "checkbox", id: "terms" }),
+  createElement("input", { type: "checkbox", id: "terms", required: true }),
   createElement(
     "label",
     { for: "terms" },
@@ -90,7 +110,11 @@ checkCont.append(
   ),
 );
 
-const submitBtn = createElement("button", { type: "submit" }, "Create account");
+const submitBtn = createElement(
+  "button",
+  { type: "submit", disabled: "false" },
+  "Create account",
+);
 
 // ================== FINAL==================
 const form = createElement("form", { id: "app" });
@@ -118,40 +142,97 @@ class Person {
   }
 }
 
-submitBtn.addEventListener("submit", (e) => {
-  e.preventDefault();
+function setDatatoLocalStorage(event) {
+  event.preventDefault();
   const inputs = form.querySelectorAll("input[name]");
-  const person = new Person(inputs);
+  const person = new Person(...inputs);
   const storageKey = person.lastName;
-  
-  localStorage.setItem(storageKey, JSON.stringify(person));
-});
-//=========================================Email validation============================================
 
-const emailInput = document.querySelector('input[type="email"]');
-const invalidEmailBorder = document.createElement('div');
-invalidEmailBorder.classList.add('invalidEmailBorder');
-invalidEmailBorder.textContent = 'Некоректна форма запису електроної пошти';
-row2.appendChild(invalidEmailBorder)
-
-const regExpEmail = /^[\w.-]+@[\w.-]+\.\w{2,13}$/i;
-
-function setValid() {
-  invalidEmailBorder.classList.remove('show');
+  localStorage.setItem(
+    storageKey,
+    JSON.stringify(person, (name, value) =>
+      name === "account" ? undefined : value,
+    ),
+  );
 }
 
-function setInvalid() {
-  invalidEmailBorder.classList.add('show');
+form.addEventListener("submit", setDatatoLocalStorage);
+
+const emailInput = document.querySelector('input[type="email"]');
+const invalidEmailBorder = document.createElement("div");
+invalidEmailBorder.classList.add("invalidEmailBorder");
+row2.appendChild(invalidEmailBorder);
+
+const regExpEmail = /^[^@]+@[^@]+\.[^@]{2,13}$/i;
+
+function setValidEmail() {
+  invalidEmailBorder.classList.remove("show");
+  invalidEmailBorder.textContent = "";
+}
+
+function setInvalidEmail(message) {
+  invalidEmailBorder.textContent = message;
+  invalidEmailBorder.classList.add("show");
+}
+
+function getEmailHint(value) {
+  if (/\s/.test(value)) {
+    return "Адреса електронної пошти не повинна містити пробілів";
+  }
+
+  if (!value.includes("@")) {
+    return "Потрібен символ @";
+  }
+
+  const [local, domain] = value.split("@");
+
+  if (!local) return "Вкажіть ім'я перед @";
+  if (!domain) return "Вкажіть домен після @";
+  if (!domain.includes(".")) return "Домен має містити крапку";
+
+  const domainParts = domain.split(".");
+  const tld = domainParts[domainParts.length - 1];
+
+  if (tld.length < 2) return "Розширення домену занадто коротке";
+  if (tld.length > 13) return "Розширення домену занадто довге";
+  return "Некоректна форма запису електронної пошти";
 }
 
 function checkEmail(event) {
   const value = event.target.value;
 
-  if (value === '') {
-    setValid();
+  if (value.length === 0) {
+    setValidEmail();
     return;
   }
-  regExpEmail.test(value) ? setValid() : setInvalid();
+
+  if (!regExpEmail.test(value)) {
+    setInvalidEmail(getEmailHint(value));
+  } else {
+    setValidEmail();
+  }
 }
 
-emailInput.addEventListener('input', checkEmail);
+emailInput.addEventListener("input", checkEmail);
+
+//=================================VALID PASSWORD========================================
+const invalidPasswordBorder = document.createElement("div");
+invalidPasswordBorder.classList.add("invalidPasswordBorder");
+invalidPasswordBorder.textContent = "Паролі не однакові";
+row3.append(invalidPasswordBorder);
+
+document.querySelectorAll('input[type="password"]').forEach((input, index) => {
+  input.addEventListener("input", getValidPassword);
+});
+
+const passwords = {};
+
+function getValidPassword(event) {
+  passwords[event.target.id] = event.target.value;
+  
+  if (passwords["0"] && passwords["1"] && passwords["0"] !== passwords["1"]) {
+    invalidPasswordBorder.classList.add("active");
+  } else {
+    invalidPasswordBorder.classList.remove("active");
+  }
+}

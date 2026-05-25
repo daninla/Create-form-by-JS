@@ -132,7 +132,7 @@ button[type="submit"] {
   height: 64px;
   border: none;
   border-radius: 3px;
-  background-color: #35d0cf;
+  background-color: #8b8989;
   color: white;
   font-size: 18px;
   font-weight: 700;
@@ -141,22 +141,35 @@ button[type="submit"] {
 
 .invalidEmailBorder {
   display: none;
-  width: 45%;
-  height: 60px;
-  border: 3px solid red;
-  background-color: #ffa0a0;
-  border-radius: 10px;
-  z-index: 9999;
-  right: 24px;
+  width: 48%;
+  height: 50px;
+  font-size: 13px;
+  border: 2px solid red;
+  border-top: none;
+  border-radius: 1px;
   top: 270px;
-  position: absolute;
   color: #ff0000;
   text-align: center;
   align-items: center;
   justify-content: center;
   transition: 0.3s;
+  margin-left: 52%;
 }
 
 .invalidEmailBorder.show {
   display: flex;
+}
+
+.invalidPasswordBorder {
+  width: 100px;
+  height: 100px;
+  background: rgb(255, 38, 38);
+  left: 40%;
+  top: 50%;
+  display: none;
+  position: absolute;
+}
+
+.invalidPasswordBorder.active {
+  display: block;
 }
