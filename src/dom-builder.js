@@ -10,8 +10,16 @@ const createElement = (tag, attrs = {}, text = "") => {
 };
 
 //=================HEADERS================
-const mainTitle = createElement("h1", { class: "main-title" }, "CREATE AN ACCOUNT");
-const subTitle = createElement("p", { class: "sub-title" }, "We always keep your name and email address private.");
+const mainTitle = createElement(
+  "h1",
+  { class: "main-title" },
+  "CREATE AN ACCOUNT",
+);
+const subTitle = createElement(
+  "p",
+  { class: "sub-title" },
+  "We always keep your name and email address private.",
+);
 
 //=================Inputs================
 const createRow = (in1, in2) => {
@@ -21,18 +29,38 @@ const createRow = (in1, in2) => {
 };
 
 export const row1 = createRow(
-  { type: "text", placeholder: "First name", name: "firstName", required: true },
-  { type: "text", placeholder: "Last name", name: "lastName", required: true }
+  {
+    type: "text",
+    placeholder: "First name",
+    name: "firstName",
+    required: true,
+  },
+  { type: "text", placeholder: "Last name", name: "lastName", required: true },
 );
 
 export const row2 = createRow(
-  { type: "text", placeholder: "Display Name", name: "displayName", required: true },
-  { type: "email", placeholder: "Email Address", name: "emailAddress", required: true }
+  {
+    type: "text",
+    placeholder: "Display Name",
+    name: "displayName",
+    required: true,
+  },
+  {
+    type: "email",
+    placeholder: "Email Address",
+    name: "emailAddress",
+    required: true,
+  },
 );
 
 export const row3 = createRow(
   { id: 0, type: "password", placeholder: "Password", required: true },
-  { id: 1, type: "password", placeholder: "Password Confirmation", required: true }
+  {
+    id: 1,
+    type: "password",
+    placeholder: "Password Confirmation",
+    required: true,
+  },
 );
 
 // =================RadioButtons==================
@@ -51,7 +79,7 @@ const createRadio = (title, desc, value) => {
   const label = createElement("label", { for: uniqueId });
   label.append(
     createElement("span", { class: "radio-title" }, title),
-    createElement("span", { class: "radio-description" }, desc)
+    createElement("span", { class: "radio-description" }, desc),
   );
 
   item.append(input, label);
@@ -60,22 +88,46 @@ const createRadio = (title, desc, value) => {
 
 const radioCont = createElement("div", { class: "radio-container" });
 radioCont.append(
-  createRadio("Join As a Buyer", "I am looking for a Name, Logo or Tagline for my business, brand or product.", "buyer"),
-  createRadio("Join As a Creative or Marketplace Seller", "I plan to submit name ideas, Logo designs or sell names in Domain Marketplace.", "seller")
+  createRadio(
+    "Join As a Buyer",
+    "I am looking for a Name, Logo or Tagline for my business, brand or product.",
+    "buyer",
+  ),
+  createRadio(
+    "Join As a Creative or Marketplace Seller",
+    "I plan to submit name ideas, Logo designs or sell names in Domain Marketplace.",
+    "seller",
+  ),
 );
 
 // ================Checkbox================
 const checkCont = createElement("div", { class: "checkbox-container" });
 checkCont.append(
   createElement("input", { type: "checkbox", id: "terms", required: true }),
-  createElement("label", { for: "terms" }, "Allow Squadhelp to send marketing/promotional offers from time to time")
+  createElement(
+    "label",
+    { for: "terms" },
+    "Allow Squadhelp to send marketing/promotional offers from time to time",
+  ),
 );
 
-export const submitBtn = createElement("button", { type: "submit", disabled: true }, "Create account");
-
+export const submitBtn = createElement(
+  "button",
+  { type: "submit", disabled: true },
+  "Create account",
+);
 
 export const form = createElement("form", { id: "app" });
-form.append(mainTitle, subTitle, row1, row2, row3, radioCont, checkCont, submitBtn);
+form.append(
+  mainTitle,
+  subTitle,
+  row1,
+  row2,
+  row3,
+  radioCont,
+  checkCont,
+  submitBtn,
+);
 
 const main = createElement("main");
 main.append(form);

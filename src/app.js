@@ -1,6 +1,6 @@
 "use strict";
 
-import { form, row2, row3, submitBtn } from './dom-builder.js';
+import { form, row2, row3, submitBtn } from "./dom-builder.js";
 
 //==================================LocalStorage======================
 
@@ -19,12 +19,13 @@ function setDatatoLocalStorage(event) {
   localStorage.setItem(
     storageKey,
     JSON.stringify(person, (name, value) =>
-      name === "account" ? undefined : value
-    )
+      name === "account" ? undefined : value,
+    ),
   );
+  form.reset()
 }
 
-form.addEventListener("submit", setDatatoLocalStorage, { once: true });
+form.addEventListener("submit", setDatatoLocalStorage);
 
 function validateForm() {
   const isHtmlValid = form.checkValidity();
@@ -38,8 +39,9 @@ function validateForm() {
     submitBtn.disabled = false;
     submitBtn.style.background = "#28D2D1";
   } else {
+    // Важно: возвращаем кнопку в исходное состояние, если валидация потеряна
     submitBtn.disabled = true;
-    submitBtn.style.background = ""; 
+    submitBtn.style.background = "";
   }
 }
 
@@ -65,7 +67,8 @@ function setInvalidEmail(message) {
 }
 
 function getEmailHint(value) {
-  if (/\s/.test(value)) return "Адреса електронної пошти не повинна містити пробілів";
+  if (/\s/.test(value))
+    return "Адреса електронної пошти не повинна містити пробілів";
   if (!value.includes("@")) return "Потрібен символ @";
 
   const [local, domain] = value.split("@");
